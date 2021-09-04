@@ -1,7 +1,6 @@
 package com.example.products.network
 
-import com.example.products.R
-import com.example.products.model.Product
+import android.util.Log
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -11,28 +10,35 @@ import retrofit2.http.GET
 
 
 interface ProductNetworkStore {
-    fun getProductIds(completion: (ArrayList<String>) -> Void)
+    fun getProductIds(completion: (ArrayList<String>) -> Unit)
 }
 
 class ProductAPI(private val baseUrl: String) : ProductNetworkStore {
 
-    override fun getProductIds(completion: (ArrayList<String>) -> Void) {
-
-        val retrofit = Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create()).build()
+    override fun getProductIds(completion: (ArrayList<String>) -> Unit) {
+        Log.d("SUSHI", "get.API call")
+        val retrofit =
+            Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create())
+                .build()
         val api = retrofit.create(ProductAPIEndPoint::class.java)
 
-        api.getProductIDs().enqueue(object: Callback<ArrayList<String>> {
+        var call = api.getProductIDs()
+
+        call.enqueue(object : Callback<ArrayList<String>> {
 
             @Override
-            public fun onResponse(call: Call<ArrayList<String>>, response: Response<ArrayList<String>>) {
-
+            override fun onResponse(
+                call: Call<ArrayList<String>>,
+                response: Response<ArrayList<String>>
+            ) {
+                Log.d("SUSHI", "Sucess")
                 completion(response.body()!!)
-
+                print(response.body())
             }
 
             @Override
-            public fun onFailure(call: Call<Array<String>>?, t: Throwable?) {
-
+            override fun onFailure(call: Call<ArrayList<String>>, t: Throwable) {
+               Log.d("SUSHI", t.message!!)
             }
 
         })
@@ -43,5 +49,5 @@ class ProductAPI(private val baseUrl: String) : ProductNetworkStore {
 
 public interface ProductAPIEndPoint {
     @GET("product-ids")
-    fun getProductIDs() : Call<ArrayList<String>>
+    fun getProductIDs(): Call<ArrayList<String>>
 }

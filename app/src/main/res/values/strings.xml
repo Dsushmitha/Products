@@ -15,5 +15,5 @@
     <string name="product_price_3">$30</string>
     <string name="product_price_4">$10</string>
     <string name="product_price_5">$40</string>
-    <string name="base_url">http://35.154.26.203/product-ids</string>
+    <string name="base_url">http://35.154.26.203/</string>
 </resources>
