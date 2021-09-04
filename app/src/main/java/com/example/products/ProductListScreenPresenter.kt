@@ -2,7 +2,7 @@ package com.example.products
 
 import android.util.Log
 import com.example.products.model.Product
-import com.example.products.network.ProductNetworkStore
+import com.example.products.store.ProductNetworkStore
 import com.google.firebase.database.DatabaseReference
 
 class ProductListScreenPresenter(
@@ -20,13 +20,9 @@ class ProductListScreenPresenter(
     }
 
     private fun getProductIds() {
+
         networkStore.getProductIds { list ->
-            val productl =list.map { Product("sus", it, R.drawable.image1, "$100") }
-            var productList = arrayListOf<Product>()
-            productList.addAll(productl)
-            view.loadProductList(productList)
-            Log.d("SUSHI","network  store return data")
-            print(productList)
+            view.loadProductList(list)
         }
     }
 }

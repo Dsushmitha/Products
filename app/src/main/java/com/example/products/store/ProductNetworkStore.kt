@@ -1,4 +1,4 @@
-package com.example.products.network
+package com.example.products.store
 
 import android.util.Log
 import retrofit2.Call

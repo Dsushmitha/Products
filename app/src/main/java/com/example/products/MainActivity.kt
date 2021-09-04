@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.products.adapter.ItemAdapter
 import com.example.products.model.Product
-import com.example.products.network.ProductAPI
+import com.example.products.store.FirebaseStore
+import com.example.products.store.ProductAPI
 import com.google.firebase.database.*
 
 class MainActivity : AppCompatActivity(), ProductListScreenView {
@@ -23,12 +24,12 @@ class MainActivity : AppCompatActivity(), ProductListScreenView {
         recyclerView.setHasFixedSize(true)
         Log.d("SUSHI","1 on create")
 
-        val db = FirebaseDatabase.getInstance().getReference("ids")
+        val db = FirebaseDatabase.getInstance().getReference("product-ids")
         presenter = ProductListScreenPresenter(db, this, ProductAPI(resources.getString(R.string.base_url)))
         presenter.onCreate()
     }
 
-    override fun loadProductList(arrayProductIds: ArrayList<Product>) {
-        recyclerView.adapter = ItemAdapter(arrayProductIds)
+    override fun loadProductList(arrayProductIds: ArrayList<String>) {
+        recyclerView.adapter = ItemAdapter(arrayProductIds, FirebaseStore())
     }
 }

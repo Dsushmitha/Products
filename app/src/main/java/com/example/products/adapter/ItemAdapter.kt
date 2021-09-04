@@ -1,6 +1,5 @@
 package com.example.products.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,9 +7,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.products.R
-import com.example.products.model.Product
+import com.example.products.store.RemoteKeyValueStore
 
-class ItemAdapter( private val dataset: ArrayList<Product>) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
+class ItemAdapter( private val dataset: ArrayList<String>, private val remoteKeyValueStore: RemoteKeyValueStore) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
     class ItemViewHolder(private val view:View) : RecyclerView.ViewHolder(view){
         val textView1: TextView = view.findViewById(R.id.item_tittle)
         val textView2: TextView = view.findViewById(R.id.item_description)
@@ -24,11 +23,19 @@ class ItemAdapter( private val dataset: ArrayList<Product>) : RecyclerView.Adapt
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val item = dataset[position]
-        holder.textView1.text = item.name
-        holder.textView2.text = item.desc
-        holder.imageView.setImageResource(item.imageResourceId)
-        holder.textView3.text = item.price
+        val productID = dataset[position]
+        remoteKeyValueStore.getSyncString("product-name/$productID") { name ->
+            holder.textView1.text = name
+        }
+        remoteKeyValueStore.getSyncString("product-desc/$productID") { desc ->
+            holder.textView2.text = desc
+        }
+        remoteKeyValueStore.getSyncLong("product-price/$productID") { price ->
+            holder.textView3.text = price.toString()
+        }
+//         remoteKeyValueStore.getSync("product-desc/$productID")
+//       // holder.imageView.setImageResource(item.imageResourceId)
+//        holder.textView3.text = remoteKeyValueStore.getSync("product-price/$productID")
     }
 
     override fun getItemCount(): Int {
