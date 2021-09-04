@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Products</string>
+    <string name="product_tittle_1">Tittle1</string>
+    <string name="product_tittle_2">Tittle2</string>
+    <string name="product_tittle_3">Tittle3</string>
+    <string name="product_tittle_4">Tittle4</string>
+    <string name="product_tittle_5">Tittle5</string>
+    <string name="product_description_1">Description 1</string>
+    <string name="product_description_2">Description 2</string>
+    <string name="product_description_3">Description 3</string>
+    <string name="product_description_4">Description 4</string>
+    <string name="product_description_5">Description 5</string>
+    <string name="product_price_1">$10</string>
+    <string name="product_price_2">$20</string>
+    <string name="product_price_3">$30</string>
+    <string name="product_price_4">$10</string>
+    <string name="product_price_5">$40</string>
+    <string name="base_url">http://35.154.26.203/product-ids</string>
+</resources>
