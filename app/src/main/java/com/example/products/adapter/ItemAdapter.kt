@@ -1,5 +1,7 @@
 package com.example.products.adapter
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +10,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.products.R
 import com.example.products.store.RemoteKeyValueStore
+import com.squareup.picasso.Picasso
+import java.io.BufferedInputStream
+import java.io.InputStream
+import java.net.URL
 
 class ItemAdapter( private val dataset: ArrayList<String>, private val remoteKeyValueStore: RemoteKeyValueStore) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
     class ItemViewHolder(private val view:View) : RecyclerView.ViewHolder(view){
@@ -33,9 +39,10 @@ class ItemAdapter( private val dataset: ArrayList<String>, private val remoteKey
         remoteKeyValueStore.getSyncLong("product-price/$productID") { price ->
             holder.textView3.text = price.toString()
         }
-//         remoteKeyValueStore.getSync("product-desc/$productID")
-//       // holder.imageView.setImageResource(item.imageResourceId)
-//        holder.textView3.text = remoteKeyValueStore.getSync("product-price/$productID")
+        remoteKeyValueStore.getSyncString("product-image/$productID") { image ->
+            Picasso.get().load(image).into(holder.imageView)
+
+        }
     }
 
     override fun getItemCount(): Int {
