@@ -37,7 +37,7 @@ class ItemAdapter( private val dataset: ArrayList<String>, private val remoteKey
             holder.textView2.text = desc
         }
         remoteKeyValueStore.getSyncLong("product-price/$productID") { price ->
-            holder.textView3.text = price.toString()
+            holder.textView3.text = "\u20B9 $price"
         }
         remoteKeyValueStore.getSyncString("product-image/$productID") { image ->
             Picasso.get().load(image).into(holder.imageView)
